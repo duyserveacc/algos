@@ -2,31 +2,43 @@ package testrunner
 
 import (
 	"bytes"
-	"reflect"
+	"slices"
 	"strings"
 	"testing"
 )
 
-func TestDecodeJSON(t *testing.T) {
-	type input struct {
-		Nums   []int `json:"nums"`
-		Target int   `json:"target"`
-	}
+func TestDecodeJSONArgs(t *testing.T) {
+	var nums []int
+	var target int
 
-	got, err := DecodeJSON[input](`{"nums":[2,7,11,15],"target":9}`)
+	err := DecodeJSONArgs(`[[2,7,11,15],9]`, &nums, &target)
 	if err != nil {
-		t.Fatalf("DecodeJSON() error = %v, want nil", err)
+		t.Fatalf("DecodeJSONArgs() error = %v, want nil", err)
 	}
-	want := input{Nums: []int{2, 7, 11, 15}, Target: 9}
-	if !reflect.DeepEqual(got, want) {
-		t.Fatalf("DecodeJSON() = %#v, want %#v", got, want)
+	if !slices.Equal(nums, []int{2, 7, 11, 15}) {
+		t.Fatalf("DecodeJSONArgs() nums = %v, want [2 7 11 15]", nums)
+	}
+	if target != 9 {
+		t.Fatalf("DecodeJSONArgs() target = %d, want 9", target)
 	}
 }
 
-func TestDecodeJSONReturnsContextualError(t *testing.T) {
-	_, err := DecodeJSON[map[string]int](`{"target":"nine"}`)
-	if err == nil || !strings.Contains(err.Error(), "decode JSON input") {
-		t.Fatalf("DecodeJSON() error = %v, want contextual decoding error", err)
+func TestDecodeJSONArgsRejectsWrongArgumentCount(t *testing.T) {
+	var nums []int
+
+	err := DecodeJSONArgs(`[[2,7,11,15],9]`, &nums)
+	if err == nil || !strings.Contains(err.Error(), "got 2 arguments, want 1") {
+		t.Fatalf("DecodeJSONArgs() error = %v, want argument-count error", err)
+	}
+}
+
+func TestDecodeJSONArgsReturnsArgumentContext(t *testing.T) {
+	var nums []int
+	var target int
+
+	err := DecodeJSONArgs(`[[2,7,11,15],"nine"]`, &nums, &target)
+	if err == nil || !strings.Contains(err.Error(), "decode JSON argument 2") {
+		t.Fatalf("DecodeJSONArgs() error = %v, want contextual argument error", err)
 	}
 }
 

@@ -27,7 +27,7 @@ Every concept page should explain:
 - Linked lists
 - [Stack](data-structures/stack/)
 - Queues and deques
-- Hash maps and sets
+- [Hash maps and sets](data-structures/hash-map/)
 - Heaps and priority queues
 - Trees and binary search trees
 - Tries

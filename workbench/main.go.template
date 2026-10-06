@@ -18,11 +18,11 @@ PASTE THE COMPLETE PROBLEM ABOVE THIS LINE
 */
 
 // sampleCases contains the examples that every registered solution must pass.
-// Add one entry per example. Encode function arguments as one JSON value.
+// Add one entry per example. Encode arguments as a positional JSON array.
 var sampleCases = []testrunner.Case{
 	// {
 	// 	Name:  "Example 1",
-	// 	Input: `{"values":[],"target":0}`,
+	// 	Input: `[[1,2,3],0]`,
 	// 	Want:  `[]`,
 	// },
 }
@@ -40,7 +40,7 @@ var solutions = []testrunner.Solution{
 
 // solveCurrentAttempt is the only function you need to change initially. It
 // receives the exact sample input string and returns the expected output form.
-// Use testrunner.DecodeJSON to convert JSON input into a problem-specific type.
+// Use testrunner.DecodeJSONArgs to decode arguments into local variables.
 // Leading and trailing whitespace is ignored during comparison; internal
 // whitespace remains significant.
 func solveCurrentAttempt(input string) string {

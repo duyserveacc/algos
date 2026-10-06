@@ -18,19 +18,21 @@ three solutions pass their checks. The archive script refuses incomplete
 workbench content.
 
 The universal workbench function accepts raw sample input and returns raw
-output. For a function-style judge such as LeetCode, encode all arguments in a
-single JSON value:
+output. For a function-style judge such as LeetCode, encode the arguments in
+call order as a JSON array:
 
 ```go
-Input: `{"nums":[2,7,11,15],"target":9}`,
+Input: `[[2,7,11,15],9]`,
 Want:  `[0,1]`,
 ```
 
-Decode that value into a problem-specific type with the shared helper, then
-keep the algorithm itself normally typed:
+Decode each argument directly into a local variable, then keep the algorithm
+itself normally typed:
 
 ```go
-parsed, err := testrunner.DecodeJSON[twoSumInput](input)
+var nums []int
+var target int
+err := testrunner.DecodeJSONArgs(input, &nums, &target)
 ```
 
 Handle the returned error at the adapter boundary. If copied problem text

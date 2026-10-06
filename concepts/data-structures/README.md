@@ -5,6 +5,7 @@ and the tradeoff that makes a structure useful.
 
 Available:
 
+- [Hash maps](hash-map/)
 - [Stack](stack/)
 
 See the complete [concept curriculum](../).

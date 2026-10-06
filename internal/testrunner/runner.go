@@ -9,13 +9,22 @@ import (
 	"strings"
 )
 
-// DecodeJSON decodes a solution's JSON input into the requested Go type.
-func DecodeJSON[T any](input string) (T, error) {
-	var value T
-	if err := json.Unmarshal([]byte(input), &value); err != nil {
-		return value, fmt.Errorf("decode JSON input: %w", err)
+// DecodeJSONArgs decodes a positional JSON array into the provided destinations.
+func DecodeJSONArgs(input string, destinations ...any) error {
+	var arguments []json.RawMessage
+	if err := json.Unmarshal([]byte(input), &arguments); err != nil {
+		return fmt.Errorf("decode JSON arguments: %w", err)
 	}
-	return value, nil
+	if len(arguments) != len(destinations) {
+		return fmt.Errorf("decode JSON arguments: got %d arguments, want %d", len(arguments), len(destinations))
+	}
+
+	for index, argument := range arguments {
+		if err := json.Unmarshal(argument, destinations[index]); err != nil {
+			return fmt.Errorf("decode JSON argument %d: %w", index+1, err)
+		}
+	}
+	return nil
 }
 
 // Case describes one sample input and its expected output.
