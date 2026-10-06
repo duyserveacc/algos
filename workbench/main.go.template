@@ -1,0 +1,84 @@
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/duyserveacc/algos/internal/testrunner"
+)
+
+/*
+===============================================================================
+PASTE THE COMPLETE PROBLEM BELOW THIS LINE
+
+Include the source URL if available.
+
+PASTE THE COMPLETE PROBLEM ABOVE THIS LINE
+===============================================================================
+*/
+
+// sampleCases contains the examples that every registered solution must pass.
+// Add one entry per example. Encode function arguments as one JSON value.
+var sampleCases = []testrunner.Case{
+	// {
+	// 	Name:  "Example 1",
+	// 	Input: `{"values":[],"target":0}`,
+	// 	Want:  `[]`,
+	// },
+}
+
+// archiveReady is set to true only after the problem, samples, three solutions,
+// analysis, and regression coverage are complete and verified.
+const archiveReady = false
+
+// solutions lists every implementation that the sample runner checks. Keep the
+// current attempt registered while developing it. When Codex adds three final
+// approaches, every approach is registered here and receives the same cases.
+var solutions = []testrunner.Solution{
+	{Name: "current attempt", Run: solveCurrentAttempt},
+}
+
+// solveCurrentAttempt is the only function you need to change initially. It
+// receives the exact sample input string and returns the expected output form.
+// Use testrunner.DecodeJSON to convert JSON input into a problem-specific type.
+// Leading and trailing whitespace is ignored during comparison; internal
+// whitespace remains significant.
+func solveCurrentAttempt(input string) string {
+	// Parse input, implement your algorithm, and return the formatted answer.
+	return ""
+}
+
+/*
+===============================================================================
+AGENT REVIEW AND COMPLEXITY ANALYSIS
+
+Current attempt:
+- What is correct:
+- First failing assumption or bottleneck:
+- Relevant concept and invariant:
+
+Solution 1 - Direct:
+- Correctness:
+- Time complexity:
+- Auxiliary-space complexity:
+
+Solution 2 - Improved:
+- Correctness:
+- Time complexity:
+- Auxiliary-space complexity:
+
+Solution 3 - Preferred:
+- Correctness:
+- Time complexity:
+- Auxiliary-space complexity:
+
+AGENT REVIEW AND COMPLEXITY ANALYSIS END
+===============================================================================
+*/
+
+func main() {
+	if err := testrunner.Run(os.Stdout, sampleCases, solutions); err != nil {
+		fmt.Fprintln(os.Stderr, "workbench:", err)
+		os.Exit(1)
+	}
+}
