@@ -121,6 +121,46 @@ var sampleCases = []testrunner.Case{
 		Input: `[[9,9,9,9,9,9,9],[9,9,9,9]]`,
 		Want:  `[8,9,9,9,0,0,0,1]`,
 	},
+	{
+		Name:  "Single digits without carry",
+		Input: `[[1],[2]]`,
+		Want:  `[3]`,
+	},
+	{
+		Name:  "Single digits produce a final carry",
+		Input: `[[5],[5]]`,
+		Want:  `[0,1]`,
+	},
+	{
+		Name:  "First number is zero",
+		Input: `[[0],[7,3]]`,
+		Want:  `[7,3]`,
+	},
+	{
+		Name:  "Second number is zero",
+		Input: `[[7,3],[0]]`,
+		Want:  `[7,3]`,
+	},
+	{
+		Name:  "Carry propagates through longer first list",
+		Input: `[[9,9,9],[1]]`,
+		Want:  `[0,0,0,1]`,
+	},
+	{
+		Name:  "Carry propagates through longer second list",
+		Input: `[[1],[9,9,9]]`,
+		Want:  `[0,0,0,1]`,
+	},
+	{
+		Name:  "Carry clears before the final digit",
+		Input: `[[8,1,2],[7,8,3]]`,
+		Want:  `[5,0,6]`,
+	},
+	{
+		Name:  "Maximum length with carry into a new node",
+		Input: `[[9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],[1]]`,
+		Want:  `[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]`,
+	},
 }
 
 // archiveReady is set to true only after the problem, samples, three solutions,

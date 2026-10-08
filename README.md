@@ -32,6 +32,11 @@ analysis.
 4. Implement `solveCurrentAttempt`.
 5. Ask Codex to review or solve "the problem in the workbench."
 
+If you ask Codex to add the inputs or examples, it will also create or update
+the problem-specific parser and call it at the start of your current
+implementation. Your algorithm will receive ready-to-use, strongly typed
+arguments rather than being left with raw sample text.
+
 Run the active file at any point with:
 
 ```bash

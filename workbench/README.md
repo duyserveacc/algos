@@ -15,6 +15,13 @@ sample execution lives in [`internal/testrunner`](../internal/testrunner/).
 5. Run `./scripts/workbench.sh` from the repository root.
 6. Ask Codex to review or solve "the problem in the workbench."
 
+When you ask Codex to add the inputs or examples, it also completes the initial
+input setup in your current implementation: it creates or updates the
+problem-specific parser and calls it at the start of `solveCurrentAttempt`, so
+your algorithm begins with strongly typed arguments. If structural output needs
+conversion, Codex also wires the matching formatter without replacing your
+algorithm body.
+
 The agent sets `archiveReady` to `true` only after the completed problem and all
 three solutions pass their checks. The archive script refuses incomplete
 workbench content.

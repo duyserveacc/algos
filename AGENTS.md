@@ -18,6 +18,13 @@ statement, samples, current attempt, solutions, and analysis.
    in the labeled section before `sampleCases`. Preserve readable statement
    serialization in the cases, convert structural values inside strongly typed
    problem-named adapters, and keep `internal/testrunner` problem-agnostic.
+   When the user asks the agent to add inputs or examples, complete the initial
+   input setup rather than only populating `sampleCases`: create or update the
+   problem-specific parser and call it at the start of the user's current
+   implementation so the parsed, strongly typed arguments are ready for their
+   algorithm. Add and wire an output formatter at the same boundary when the
+   judge result needs structural serialization. Preserve the user's algorithm
+   body while adding this setup.
 3. Preserve and review the user's attempt. Explain what is correct, the first
    failing assumption or bottleneck, and how the relevant invariant guides the
    correction.
