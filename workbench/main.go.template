@@ -17,6 +17,15 @@ PASTE THE COMPLETE PROBLEM ABOVE THIS LINE
 ===============================================================================
 */
 
+// =============================================================================
+// PROBLEM-SPECIFIC TYPES AND ADAPTERS
+//
+// Define judge-owned types and strongly typed parsing or formatting helpers
+// here. Name adapters after the problem, such as parseTwoSumInput. Keep sample
+// inputs in the statement's readable serialization and convert structural
+// values such as linked lists, trees, or graphs inside these helpers.
+// =============================================================================
+
 // sampleCases contains the examples that every registered solution must pass.
 // Add one entry per example. Encode arguments as a positional JSON array.
 var sampleCases = []testrunner.Case{
@@ -40,7 +49,8 @@ var solutions = []testrunner.Solution{
 
 // solveCurrentAttempt is the only function you need to change initially. It
 // receives the exact sample input string and returns the expected output form.
-// Use testrunner.DecodeJSONArgs to decode arguments into local variables.
+// Parse with the problem-specific adapter above, keep the algorithm strongly
+// typed, and format structural output with a problem-specific formatter.
 // Leading and trailing whitespace is ignored during comparison; internal
 // whitespace remains significant.
 func solveCurrentAttempt(input string) string {

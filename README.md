@@ -26,9 +26,11 @@ statement, sample cases, your attempt, the three completed solutions, and their
 analysis.
 
 1. Paste the statement into the `PROBLEM` block comment.
-2. Paste each example into the `sampleCases` slice using the included template.
-3. Implement `solveCurrentAttempt`.
-4. Ask Codex to review or solve "the problem in the workbench."
+2. Add problem-specific types and input/output adapters when the judge uses
+   structural values such as linked lists or trees.
+3. Paste each example into the `sampleCases` slice using the included template.
+4. Implement `solveCurrentAttempt`.
+5. Ask Codex to review or solve "the problem in the workbench."
 
 Run the active file at any point with:
 

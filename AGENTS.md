@@ -14,28 +14,32 @@ statement, samples, current attempt, solutions, and analysis.
 
 1. Read `workbench/main.go`, `workbench/main_test.go`, and the relevant concept
    pages before changing code.
-2. Preserve and review the user's attempt. Explain what is correct, the first
+2. Keep judge-owned types and problem-specific parsing and formatting adapters
+   in the labeled section before `sampleCases`. Preserve readable statement
+   serialization in the cases, convert structural values inside strongly typed
+   problem-named adapters, and keep `internal/testrunner` problem-agnostic.
+3. Preserve and review the user's attempt. Explain what is correct, the first
    failing assumption or bottleneck, and how the relevant invariant guides the
    correction.
-3. Link the problem to existing pages under `concepts/`. Add or improve a
+4. Link the problem to existing pages under `concepts/`. Add or improve a
    concept page when the necessary reference does not exist.
-4. Produce three distinct correct approaches when solving: a direct or brute
+5. Produce three distinct correct approaches when solving: a direct or brute
    force approach, an improved approach, and the preferred approach. An
    educational approach may exceed judge limits, but it must still be correct
    for inputs it can finish. Do not manufacture meaningless variants.
-5. Give each approach a descriptive function name and register it in the
+6. Give each approach a descriptive function name and register it in the
    `solutions` slice in `workbench/main.go`. Keep the judge-required function as
    a thin wrapper around the preferred approach when appropriate.
-6. Run the same `sampleCases` and table-driven regression cases against all
+7. Run the same `sampleCases` and table-driven regression cases against all
    three approaches.
    Include supplied examples, minimum or empty inputs when valid, boundary
    conditions, duplicate or adversarial values, and at least one case that
    distinguishes a common incorrect solution.
-7. In the analysis section of `workbench/main.go`, explain each approach, its
+8. In the analysis section of `workbench/main.go`, explain each approach, its
    correctness argument, and its time and auxiliary-space complexity. State
    best, average, and worst cases when they differ, and account for recursion,
    preprocessing, output, and meaningful Go allocations.
-8. Run `./scripts/workbench.sh` and `go test ./...` before claiming that the
+9. Run `./scripts/workbench.sh` and `go test ./...` before claiming that the
    solutions pass. Set `archiveReady` to `true` only after these checks pass and
    all three solutions and their analysis are complete.
 

@@ -25,3 +25,4 @@ Archive and run problems with:
 ```
 
 ## Problems
+- [easy_two_sum.go](easy_two_sum.go)

@@ -8,10 +8,12 @@ sample execution lives in [`internal/testrunner`](../internal/testrunner/).
 ## Quick start
 
 1. Paste the problem into the `PROBLEM` block comment in `main.go`.
-2. Add every supplied example to the `sampleCases` slice.
-3. Implement `solveCurrentAttempt`.
-4. Run `./scripts/workbench.sh` from the repository root.
-5. Ask Codex to review or solve "the problem in the workbench."
+2. Define any judge-owned types and problem-specific input/output adapters in
+   the section immediately below the statement.
+3. Add every supplied example to the `sampleCases` slice.
+4. Implement `solveCurrentAttempt` using the typed adapter values.
+5. Run `./scripts/workbench.sh` from the repository root.
+6. Ask Codex to review or solve "the problem in the workbench."
 
 The agent sets `archiveReady` to `true` only after the completed problem and all
 three solutions pass their checks. The archive script refuses incomplete
@@ -26,18 +28,29 @@ Input: `[[2,7,11,15],9]`,
 Want:  `[0,1]`,
 ```
 
-Decode each argument directly into a local variable, then keep the algorithm
-itself normally typed:
+For simple values, a problem-specific parser can decode each argument directly
+and return strongly typed values:
 
 ```go
-var nums []int
-var target int
-err := testrunner.DecodeJSONArgs(input, &nums, &target)
+func parseTwoSumInput(input string) ([]int, int) {
+	var nums []int
+	var target int
+	if err := testrunner.DecodeJSONArgs(input, &nums, &target); err != nil {
+		panic(fmt.Errorf("parse two sum input: %w", err))
+	}
+	return nums, target
+}
 ```
 
-Handle the returned error at the adapter boundary. If copied problem text
-contains the uncommon sequence `*/`, change it to `* /` so it does not close
-the Go block comment early.
+Structural problems keep the same readable sample representation and perform
+the conversion inside their adapter. For example, a linked-list parser decodes
+two `[]int` arguments and builds two `*ListNode` values. Trees, graphs, matrices,
+and custom judge types follow the same pattern. Add a problem-specific formatter
+when the typed result also needs conversion back to the statement's output
+form. Handle decoding and formatting errors at these adapter boundaries.
+
+If copied problem text contains the uncommon sequence `*/`, change it to `* /`
+so it does not close the Go block comment early.
 
 Codex will preserve and review the attempt, connect it to relevant material in
 [`concepts/`](../concepts/), register three distinct solutions, and apply the

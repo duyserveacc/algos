@@ -31,8 +31,10 @@ if ALGOS_REPO_ROOT=$temporary_root "$script_directory/archive-workbench.sh" easy
   exit 1
 fi
 
+# Build the archive fixture from the canonical template so this workflow test
+# does not depend on whether the repository's active problem is complete.
 sed 's/^const archiveReady = false$/const archiveReady = true/' \
-  "$repository_root/workbench/main.go" > "$temporary_root/workbench/main.go"
+  "$repository_root/workbench/main.go.template" > "$temporary_root/workbench/main.go"
 
 ALGOS_REPO_ROOT=$temporary_root "$script_directory/archive-workbench.sh" easy two-sum
 
