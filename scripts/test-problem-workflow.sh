@@ -13,6 +13,7 @@ mkdir -p "$temporary_root/internal"
 cp -R "$repository_root/internal/testrunner" "$temporary_root/internal/testrunner"
 cp "$repository_root/workbench/main.go.template" "$temporary_root/workbench/main.go.template"
 cp "$repository_root/workbench/main.go.template" "$temporary_root/workbench/main.go"
+cp "$repository_root/workbench/main_test.go" "$temporary_root/workbench/main_test.go"
 cp "$repository_root/problems/README.md" "$temporary_root/problems/README.md"
 
 ALGOS_REPO_ROOT=$temporary_root "$script_directory/reset-workbench.sh"
@@ -35,6 +36,25 @@ fi
 # does not depend on whether the repository's active problem is complete.
 sed 's/^const archiveReady = false$/const archiveReady = true/' \
   "$repository_root/workbench/main.go.template" > "$temporary_root/workbench/main.go"
+
+cp "$temporary_root/workbench/main.go" "$temporary_root/main.go.before-failed-reset"
+printf '%s\n' \
+  'package main' \
+  '' \
+  'import "testing"' \
+  '' \
+  'func TestResetCandidateFailure(t *testing.T) {' \
+  '  t.Fatal("intentional reset validation failure")' \
+  '}' > "$temporary_root/workbench/reset_failure_test.go"
+if ALGOS_REPO_ROOT=$temporary_root "$script_directory/reset-workbench.sh" >/dev/null 2>&1; then
+  echo "error: reset with failing candidate tests unexpectedly succeeded" >&2
+  exit 1
+fi
+if ! cmp -s "$temporary_root/main.go.before-failed-reset" "$temporary_root/workbench/main.go"; then
+  echo "error: failed reset changed the workbench" >&2
+  exit 1
+fi
+rm "$temporary_root/workbench/reset_failure_test.go"
 
 ALGOS_REPO_ROOT=$temporary_root "$script_directory/archive-workbench.sh" easy two-sum
 

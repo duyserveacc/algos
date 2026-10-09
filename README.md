@@ -88,7 +88,9 @@ After confirming the archive, restore the blank workbench template:
 ```
 
 The reset refuses to discard unfinished work. `--force` is available only when
-you explicitly intend to abandon the current workbench contents.
+you explicitly intend to abandon the current workbench contents. Before
+replacing `workbench/main.go`, the script formats, runs, and tests a temporary
+candidate; a validation failure leaves the current workbench unchanged.
 
 Archived files use `//go:build ignore`, so package-wide Go commands do not
 combine independent programs. Named-file execution still runs them directly,

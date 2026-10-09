@@ -12,6 +12,11 @@ When the user asks for help with, an answer to, or a review of "the problem in
 the workbench," treat `workbench/main.go` as the single source of truth for the
 statement, samples, current attempt, solutions, and analysis.
 
+A request to review the workbench problem is an implementation request unless
+the user explicitly asks for findings only or says not to edit files. Complete
+the full workflow below, including three solutions and their analysis; do not
+stop after reporting review findings.
+
 1. Read `workbench/main.go`, `workbench/main_test.go`, and the relevant concept
    pages before changing code.
 2. Keep judge-owned types and problem-specific parsing and formatting adapters
@@ -30,8 +35,8 @@ statement, samples, current attempt, solutions, and analysis.
    correction.
 4. Link the problem to existing pages under `concepts/`. Add or improve a
    concept page when the necessary reference does not exist.
-5. Produce three distinct correct approaches when solving: a direct or brute
-   force approach, an improved approach, and the preferred approach. An
+5. Produce three distinct correct approaches: a direct or brute force
+   approach, an improved approach, and the preferred approach. An
    educational approach may exceed judge limits, but it must still be correct
    for inputs it can finish. Do not manufacture meaningless variants.
 6. Give each approach a descriptive function name and register it in the
@@ -45,7 +50,11 @@ statement, samples, current attempt, solutions, and analysis.
 8. In the analysis section of `workbench/main.go`, explain each approach, its
    correctness argument, and its time and auxiliary-space complexity. State
    best, average, and worst cases when they differ, and account for recursion,
-   preprocessing, output, and meaningful Go allocations.
+   preprocessing, output, and meaningful Go allocations. For each solution,
+   include a concrete worked example using an actual input. Trace the relevant
+   variables, pointers, data structures, and state changes step by step so the
+   reader can map the example directly to the code; an outcome-only example is
+   not sufficient.
 9. Run `./scripts/workbench.sh` and `go test ./...` before claiming that the
    solutions pass. Set `archiveReady` to `true` only after these checks pass and
    all three solutions and their analysis are complete.

@@ -43,7 +43,11 @@ fi
 
 temporary_directory=$(mktemp -d "$repository_root/.reset-workbench.XXXXXX")
 temporary_file="$temporary_directory/main.go"
+temporary_test_files=()
 cleanup() {
+  if [[ ${#temporary_test_files[@]} -gt 0 ]]; then
+    rm -f "${temporary_test_files[@]}"
+  fi
   rm -f "$temporary_file"
   rmdir "$temporary_directory" 2>/dev/null || true
 }
@@ -52,12 +56,27 @@ trap cleanup EXIT
 cp "$template_file" "$temporary_file"
 gofmt -w "$temporary_file"
 (cd "$repository_root" && go run "$temporary_file")
-mv "$temporary_file" "$workbench_file"
-rmdir "$temporary_directory"
-trap - EXIT
 
-if [[ -f "$repository_root/go.mod" && -f "$repository_root/workbench/main_test.go" ]]; then
-  (cd "$repository_root" && go test ./workbench)
+if [[ -f "$repository_root/go.mod" ]]; then
+  shopt -s nullglob
+  workbench_test_files=("$repository_root"/workbench/*_test.go)
+  shopt -u nullglob
+
+  for test_file in "${workbench_test_files[@]}"; do
+    temporary_test_file="$temporary_directory/$(basename "$test_file")"
+    cp "$test_file" "$temporary_test_file"
+    temporary_test_files+=("$temporary_test_file")
+  done
+
+  if [[ ${#temporary_test_files[@]} -gt 0 ]]; then
+    (cd "$repository_root" && go test "$temporary_file" "${temporary_test_files[@]}")
+  fi
 fi
+
+if [[ ${#temporary_test_files[@]} -gt 0 ]]; then
+  rm -f "${temporary_test_files[@]}"
+  temporary_test_files=()
+fi
+mv "$temporary_file" "$workbench_file"
 
 echo "reset $workbench_file"

@@ -26,3 +26,4 @@ Archive and run problems with:
 
 ## Problems
 - [easy_two_sum.go](easy_two_sum.go)
+- [easy_add_two_numbers.go](easy_add_two_numbers.go)

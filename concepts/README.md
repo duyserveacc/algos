@@ -24,7 +24,7 @@ Every concept page should explain:
 ## Data structures
 
 - Arrays, slices, and strings
-- Linked lists
+- [Linked lists](data-structures/linked-list/)
 - [Stack](data-structures/stack/)
 - Queues and deques
 - [Hash maps and sets](data-structures/hash-map/)
